@@ -1,8 +1,12 @@
 ENTRY(_start)
 
 SECTIONS {
-  . = 0x80010000;
+  /* Load exception handlers at 0x000. Should be right. */
+  . = 0x000;
+  .exceptions : { *(.exceptions) }
 
+  /* Kernel code in flash memory. */
+  . = 0x80010000;
   .stub   : { obj/stub.o(.text) }
   .text   : { *(.text) }
   .rodata : { *(.rodata) }

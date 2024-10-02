@@ -2,7 +2,8 @@ ARCH ?= arm-none-eabi
 
 CC 		  := $(ARCH)-gcc
 CFLAGS  := -ffreestanding -Wall -Wextra \
-					 -Iinclude/
+					 -Iinclude/ -fno-unwind-tables -fno-asynchronous-unwind-tables
+
 
 AS			:= $(ARCH)-as
 ASFLAGS := -march=armv7-a -mcpu=cortex-a15
@@ -46,4 +47,4 @@ clean:
 
 
 qemu: bin/kernel.elf
-	qemu-system-arm -M vexpress-a15 -cpu cortex-a15 -kernel $^ -serial stdio
+	qemu-system-arm -M vexpress-a15 -cpu cortex-a15 -d int -kernel $^ -serial stdio
