@@ -1,0 +1,10 @@
+bin/
+obj/
+
+.vscode/
+*.elf
+*.img
+*.iso
+
+test/
+fs/
