@@ -21,6 +21,8 @@ _VectorTable:
 .set MODE_UND, 0x1B
 .set MODE_SYS, 0x1F
 
+.set NO_PAGING, 0b0000
+
 .global _start
 _start:
   ldr sp, =STACK_TOP /* Setup stack, 1000 bytes (1kb) */
@@ -30,6 +32,21 @@ _start:
   mov r0, #MODE_SVC
   and r0, r0, #(0x1f)
   msr cpsr, r0
+
+  // Setup page tables/paging
+
+  /// Check if paging is supported.
+  mrc p15, 0, r1, c1, c0, 0
+  and r1, r1, #0xF
+  cmp r1, #NO_PAGING
+  beq .
+
+  /// Paging is supported for this board!
+
+  // Enable MMU
+  mrc p15, 0, r1, c1, c0, 0
+  eor r1, #(1<<0)            // 0b1 XOR 0b1 => 0b0, 0b0 XOR 0b1 => 0b1
+  mcr p15, 0, r1, c1, c0, 0  // Write back
 
   bl start
 1:
