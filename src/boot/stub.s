@@ -11,9 +11,26 @@ _VectorTable:
   b .         /* 0x1C: FIQ */
 
 .section .text
+
+.set MODE_USR, 0x10
+.set MODE_FIQ, 0x11
+.set MODE_IRQ, 0x12
+.set MODE_SVC, 0x13
+.set MODE_MON, 0x16
+.set MODE_ABT, 0x17
+.set MODE_UND, 0x1B
+.set MODE_SYS, 0x1F
+
 .global _start
 _start:
   ldr sp, =STACK_TOP /* Setup stack, 1000 bytes (1kb) */
+
+  /* Enforce running in Supervisor mode. We don't know if
+   * some hardware will do that for us. */
+  mov r0, #MODE_SVC
+  and r0, r0, #(0x1f)
+  msr cpsr, r0
+
   bl start
 1:
   b 1b
