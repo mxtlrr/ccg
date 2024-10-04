@@ -1,14 +1,13 @@
 ARCH ?= arm-none-eabi
 
-CC 		  := $(ARCH)-gcc
+CC      := $(ARCH)-gcc
 CFLAGS  := -ffreestanding -Wall -Wextra \
-					 -Iinclude/ -fno-unwind-tables -fno-asynchronous-unwind-tables
+           -Iinclude/
 
-
-AS			:= $(ARCH)-as
+AS      := $(ARCH)-as
 ASFLAGS := -march=armv7-a -mcpu=cortex-a15
 
-LD 			:= $(ARCH)-ld
+LD      := $(ARCH)-ld
 LDFLAGS := -Tsrc/link.ld
 
 
@@ -18,8 +17,11 @@ BINDIR := bin
 
 TARGET := $(BINDIR)/kernel.elf
 
-SOURCES := $(shell find $(SRCDIR) -name '*.c')
-OBJECTS := $(patsubst $(SRCDIR)/%.c,$(OBJDIR)/%.o,$(SOURCES))
+C_SOURCES := $(shell find $(SRCDIR) -name '*.c')
+ASM_SOURCES := $(shell find include/ -name '*.s')
+OBJECTS := $(patsubst $(SRCDIR)/%.c,$(OBJDIR)/%.o,$(C_SOURCES)) \
+           $(patsubst include/%.s,$(OBJDIR)/%.o,$(ASM_SOURCES))
+
 all: stub $(TARGET)
 
 stub:
@@ -35,6 +37,11 @@ $(OBJDIR)/%.o: $(SRCDIR)/%.c | obj
 	@echo CC $<
 	@mkdir -p $(dir $@)
 	@$(CC) $(CFLAGS) -c $< -o $@
+
+$(OBJDIR)/%.o: include/%.s | obj
+	@echo AS $<
+	@mkdir -p $(dir $@)
+	@$(AS) $(ASFLAGS) $< -o $@
 
 $(OBJDIR):
 	@mkdir -p $(OBJDIR)
