@@ -42,12 +42,6 @@ _start:
   beq .
 
   /// Paging is supported for this board!
-
-  // Enable MMU
-  mrc p15, 0, r1, c1, c0, 0
-  eor r1, #(1<<0)            // 0b1 XOR 0b1 => 0b0, 0b0 XOR 0b1 => 0b1
-  mcr p15, 0, r1, c1, c0, 0  // Write back
-
   bl start
 1:
   b 1b

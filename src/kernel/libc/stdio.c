@@ -45,3 +45,12 @@ void printf(char* fmt, ...){
     }
   }
 }
+
+char uart0_getc(void){
+  char c = 0;
+  do {
+    while ((UART0FR) & TXFF); // Poll flag register until buffer is empty
+    c = (char)UART0DR;      // Read from the data register
+  } while (c == 0);
+  return c;
+}
