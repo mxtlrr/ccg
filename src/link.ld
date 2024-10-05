@@ -4,13 +4,7 @@ ENTRY(_start)
 /* This should be loaded first */
 STARTUP(obj/stub.o)
 
-/* IVT_LOCATION = 0xFFFF0000;
-MEMORY {
-  excp (rx) : ORIGIN = IVT_LOCATION, LENGTH = 2048
-} */
-
 SECTIONS {
-
   /* Kernel code in flash memory. */
   . = 0x80010000;
   .text   : { *(.text) }
@@ -22,8 +16,6 @@ SECTIONS {
   . += 0x10000;
   STACK_TOP = .;
 
-
-  /* . = 0xFFFF0000; */
   . = 0;
   .exceptions : {
     *(.exceptions*)

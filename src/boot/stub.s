@@ -42,6 +42,15 @@ _start:
   beq .
 
   /// Paging is supported for this board!
+  // Enable EL0/User mode
+
+	// Set up user stack
+	movw r0, #0x2000
+	movt r0, #0x8002 // Weirdly can't load 32-bit vals into registers.
+									 // oh well.
+	msr sp_usr, r0
+
+  cps #MODE_USR
   bl start
 1:
   b 1b

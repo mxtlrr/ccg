@@ -2,11 +2,14 @@
 #include "arch/pe.h"
 
 void start() {
-  puts("Hello, World!\n");
-  
-  /* Get processing element (PE) mode - the processor mode */
+  printf("[ccg] Hello World!\n");
+
+	// Get current execution level
   uint8_t pe_mode = get_mode();
-  printf("[ccg] PE mode is %x\n", pe_mode);
-  
+  if(pe_mode == 0){
+		printf("[ccg] CCG is in user mode..\n");
+	} else printf("[ccg] CCG is in %s mode..\n", pe_modes[pe_mode]);
+
+
   // TODO: devicetree...
 }
