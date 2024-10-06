@@ -15,15 +15,43 @@ Run `make qemu`. It opens QEMU with the serial (where the output is
 directed to via UART) as the terminal, as well as interrupts turned on,
 so you know what's happening.
 
-## Real Hardware
-I dunno. Don't have a ARM board
-
 # Roadmap / Stuff To Do
-- [ ] write to some machine registers to enable some features
-- [ ] put the machine in EL1
-- [ ] parse a device tree to see what hardware is availbale
-- [ ] set up a page table and enable the MMU
-- [X] install interrupt handlers in the exception vector table
-- [ ] interact with the interrupt controller to make it direct the interrupts to specific cores.
-- [ ] Support PL110
-- [ ] Actual bootloader!
+- [ ] Enable features that ARM lets me enable
+  - [ ] TLB
+  - [ ] MMU
+  - [ ] Others I can't think of
+- [X] Put machine in EL0, user mode
+- [ ] Parse device tree
+  - [ ] Would probably require a rootFS, meaning bootloader required
+  here.
+- [ ] Page table
+  - [ ] Set up TLB
+  - [ ] Encode all 4096 tables
+  - [ ] Turn on the MMU and **not** get a prefetch abort :skull:
+- [ ] Exceptions
+  - [ ] Undefined instruction
+  - [X] System calls
+  - [ ] Prefetch
+  - [ ] Data abort
+  - [ ] IRQ/FIQ
+- [ ] Bootloader
+  - [ ] U-boot
+- [ ] TmpFS
+  - [ ] RW
+  - [ ] Syscalls for reading/writing
+- [ ] Enable/work on some peripherals
+  - [X] UART0
+  - [ ] Ethernet(?)
+
+# The TmpFS: Technical Details
+CCG uses a temporary read/write filesystem, meaning that
+- You can read/write to every file on it.
+- When the system is reset, all changes are lost.
+
+## The Syscalls
+
+|  Syscall name  |                Action                | Vector # | 
+| -------------- | ------------------------------------ | -------- |
+| FS_CREATE_FILE | Creates a file with an empty buffer. | `0x001`  |
+| FS_REMOVE_FILE | Delete a file.                       | `0x001`  |
+| FS_READ_FILE   | Reads the *entire* buffer of a file. | `0x001`  |
