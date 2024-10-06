@@ -1,6 +1,8 @@
 #include "libc/stdio.h"
 #include "arch/pe.h"
 
+#include "fs/fs.h"
+
 void start() {
   printf("[ccg] Hello World!\n");
 
@@ -10,6 +12,10 @@ void start() {
 		printf("[ccg] CCG is in user mode..\n");
 	} else printf("[ccg] CCG is in %s mode..\n", pe_modes[pe_mode]);
 
+	// RW temporary filesystem
+	printf("[fs] initializing tmpfs...");
+	fs_t tmpfs = init_fs();
+	printf("done!\n");
 
-  // TODO: devicetree...
+  // TODO: devicetree...?
 }
