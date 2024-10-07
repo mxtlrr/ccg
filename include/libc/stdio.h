@@ -21,6 +21,5 @@ enum UART_FLAG_REG_VAL {
 
 void putc(char c);
 void puts(char* fmt);
-void put_hex(uint32_t num);
 
 void printf(char* fmt, ...);

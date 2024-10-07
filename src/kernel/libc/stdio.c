@@ -13,13 +13,6 @@ void puts(char* fmt) {
   for (int i = 0; fmt[i] != '\0'; i++) putc(fmt[i]);
 }
 
-void put_hex(uint32_t num) {
-  char* hex_digits = "0123456789abcdef";
-  for (int i = 7; i >= 0; i--) {
-    uint8_t nibble = (num >> (i * 4)) & 0xF;
-    putc(hex_digits[nibble]);
-  }
-}
 
 void printf(char* fmt, ...){
   va_list ap;
@@ -37,7 +30,11 @@ void printf(char* fmt, ...){
 
         case 'x':
           puts("0x");
-          put_hex(va_arg(ap, uint32_t));
+          puts(itoa(va_arg(ap, uint32_t), 16));
+          break;
+
+        case 'd':
+          puts(itoa(va_arg(ap, int), 10));
           break;
       }
     } else {
