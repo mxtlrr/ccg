@@ -1,5 +1,7 @@
 #include "fs/fs.h"
 
+fs_t globl_tmpfs;
+
 fs_t init_fs(void){
 	fs_t tmpfs;
 	for(int i = 0; i < 10; i++){

@@ -3,6 +3,8 @@
 
 #include "fs/fs.h"
 
+
+extern void test();
 void start() {
   printf("[ccg] Hello World!\n");
 
@@ -14,7 +16,7 @@ void start() {
 
 	// RW temporary filesystem
 	printf("[fs] initializing tmpfs...");
-	fs_t tmpfs = init_fs();
+	globl_tmpfs = init_fs();
 	printf("done!\n");
 
   // TODO: devicetree...?

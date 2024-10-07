@@ -3,6 +3,8 @@
 #include <stdint.h>
 #include <stdarg.h>
 
+#include "libc/string.h"
+
 // UART stuff
 #define UART0_BASE 0x1c090000
 #define UART0DR    (*(volatile uint32_t*)(UART0_BASE     )) // data. 12 bits on read, 8 on write.
