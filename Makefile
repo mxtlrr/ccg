@@ -53,5 +53,11 @@ clean:
 	rm -rf $(OBJDIR) $(BINDIR)
 
 
+# Do not change these!
+QEMU_FLAGS_I := -M vexpress-a15 -cpu cortex-a15
+
+# You can change these, however. Keep -serial stdio if you
+# want to have the kernel output to the terminal.
+QEMU_FLAGS_E ?= -d int -serial stdio
 qemu: bin/kernel.elf
-	qemu-system-arm -M vexpress-a15 -cpu cortex-a15 -d int -kernel $^ -serial stdio
+	qemu-system-arm $(QEMU_FLAGS_I) $(QEMU_FLAGS_E) -kernel $^
