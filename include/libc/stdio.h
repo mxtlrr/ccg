@@ -19,7 +19,10 @@ enum UART_FLAG_REG_VAL {
   RXFE = (1<<5)     // Bit set when buffer is empty
 };
 
+char uart0_getc(void);
+
 void putc(char c);
 void puts(char* fmt);
 
 void printf(char* fmt, ...);
+

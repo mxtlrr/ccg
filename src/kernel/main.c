@@ -1,7 +1,9 @@
 #include "libc/stdio.h"
 #include "arch/pe.h"
-
 #include "fs/fs.h"
+#include "shell.h"
+
+
 
 void start() {
   printf("[ccg] Hello World!\n");
@@ -18,4 +20,28 @@ void start() {
 	printf("done!\n");
 
   // TODO: devicetree...?
+
+	// Small little shell.
+	// TODO: Write a PL111 / better video driver so I don't have to use
+	// serial, but for now serial is pretty neat.
+
+	char buffer[256] = { 0 }; uint8_t index = 0;
+	while(1){
+		char c = uart0_getc();
+		switch(c){
+			case ENTER:
+				printf("\n[uart]: buf is \"%s\"\n", buffer);
+				memset(buffer, 0, 256); // clear buffer
+				index = 0;						  // reset index counter.
+				break;
+			// TODO: more special characters
+
+			default:
+				putc(c);
+				buffer[index++] = c;
+				break;
+		}
+	}
+	
+	for(;;);
 }

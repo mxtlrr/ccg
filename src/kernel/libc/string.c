@@ -7,12 +7,19 @@ void memcpy(void *dest, void *src, size_t n) {
   for (size_t i=0; i<n; i++) cdest[i] = csrc[i];
 }
 
+void memset(void* s, int c, size_t n){
+	char* cs = (char*)s;
+	for(size_t i = 0; i < n; i++) cs[i] = c;
+}
+
 void strcpy(char* str1, char* str2){
   for(int i = 0; str2[i] != '\0'; i++)
     str1[i] = str2[i];
 }
 
-// internal...
+
+
+// internal... TODO: move to a "math" file
 int divide(int dividend, int divisor, int* remainder) {
   int quotient = 0;
   *remainder = dividend;  // Initialize remainder to dividend
@@ -25,7 +32,6 @@ int divide(int dividend, int divisor, int* remainder) {
   return quotient;
 }
 
-// Function to convert an integer to a string in a given base
 char* itoa(int num, int base) {
   static char str[50];
   int i = 0;
