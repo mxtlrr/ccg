@@ -3,8 +3,6 @@
 
 #include "fs/fs.h"
 
-
-extern void test();
 void start() {
   printf("[ccg] Hello World!\n");
 
