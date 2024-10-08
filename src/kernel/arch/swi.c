@@ -34,14 +34,12 @@ void swi_handler(uint32_t r0, uint32_t r1, uint32_t r2,
 					// it's just the mem location. so read the physical bytes
 					uint32_t mem_location = r2; uint32_t length = r3;
 					char buffer[length];
-					printf("[sys] reading %d bytes to node %x\n", r3, r1);
+					printf("[sys] reading %d bytes from node %x\n", r3, r1);
 					for(uint32_t i = 0; i < length; i++){
 						buffer[i] = *(uint8_t*)(mem_location+i);
 					}
 
-					// copy buffer to the nodes buffer
-					// FIXME/TODO: this is gross. fix please!!
-					strcpy(globl_tmpfs.nodes[r1].buffer, buffer);
+					tmpfs_writefile(r1, buffer);
 					break;
 			}
 			break;
