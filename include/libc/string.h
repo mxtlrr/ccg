@@ -13,4 +13,8 @@ void memset(void* s, int c, size_t n);
 // Copy str2 (src) to str1 (dest)
 void strcpy(char* str1, char* str2);
 
+// Compare two strings
+int strcmp(const char* a, const char* b);
+
 char* itoa(int num, int base);
+int strlen(char* f);

@@ -17,7 +17,23 @@ void strcpy(char* str1, char* str2){
     str1[i] = str2[i];
 }
 
+int strcmp(const char* a, const char* b){
+  const unsigned char *s1 = (const unsigned char *)a;
+  const unsigned char *s2 = (const unsigned char *)b;
+  unsigned char c1, c2;
+  do {
+		c1 = (unsigned char) *s1++;
+		c2 = (unsigned char) *s2++;
+	  if (c1 == '\0') return c1 - c2;
+  } while (c1 == c2);
+  return c1 - c2;
+}
 
+int strlen(char* f){
+	int ct = 0;
+	for(int n = 0; f[n] != '\0'; n++) ct++;
+	return ct;
+}
 
 // internal... TODO: move to a "math" file
 int divide(int dividend, int divisor, int* remainder) {

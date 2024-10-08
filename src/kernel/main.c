@@ -31,6 +31,24 @@ void start() {
 		switch(c){
 			case ENTER:
 				printf("\n[uart]: buf is \"%s\"\n", buffer);
+
+				// Get the parameter for the buffer
+				shell_call_t p = get_param(buffer);
+				if(p.params[0] != 0){
+					printf("[shell] p->buffer = \"%s\"\n", p.params);
+				
+					char caller[20];
+					for(int i = 0; buffer[i] != ' '; i++) {
+						if(i >= 20){
+							strcpy(caller, buffer);
+							break;
+						}
+						caller[i] = buffer[i];
+					}
+					printf("[shell] p->caller = \"%s\"\n", caller);
+
+					// TODO: fix this, and actually look up the caller
+				}
 				memset(buffer, 0, 256); // clear buffer
 				index = 0;						  // reset index counter.
 				break;
